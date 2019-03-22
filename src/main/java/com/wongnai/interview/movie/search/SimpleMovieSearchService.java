@@ -32,11 +32,7 @@ public class SimpleMovieSearchService implements MovieSearchService {
                     Matcher matcher = pattern.matcher(m.getTitle().toLowerCase());
                     return matcher.find();
                 })
-                .map(movieData -> {
-                    Movie m = new Movie(movieData.getTitle());
-                    m.setActors(movieData.getCast());
-                    return m;
-                })
+                .map(movieData -> new Movie(movieData.getTitle(), movieData.getCast()))
                 .collect(Collectors.toList());
     }
 }
