@@ -1,10 +1,17 @@
 package com.wongnai.interview.movie.external;
 
+import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static io.vavr.API.Try;
 
 @Component
 public class MovieDataServiceImpl implements MovieDataService {
@@ -24,6 +31,17 @@ public class MovieDataServiceImpl implements MovieDataService {
 		// Please noted that you must only read data remotely and only from given source,
 		// do not download and use local file or put the file anywhere else.
 
-		return null;
+		MoviesResponse moviesResponse = new MoviesResponse();
+		Try<MoviesResponse> _try =
+				Try(() -> {
+					ResponseEntity<String> responseEntity = restTemplate.exchange(MOVIE_DATA_URL, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class);
+					return objectMapper.readValue(responseEntity.getBody(), MoviesResponse.class);
+				});
+
+		if (_try.isSuccess()) {
+			return _try.get();
+		}
+
+		return moviesResponse;
 	}
 }

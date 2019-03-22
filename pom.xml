@@ -62,6 +62,11 @@
 			<artifactId>guava</artifactId>
 			<version>27.0.1-jre</version>
 		</dependency>
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+			<version>0.10.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
