@@ -46,10 +46,10 @@ public class SimpleMovieSearchServiceIntegrationTest {
 	}
 
 	@Test
-	public void testFullMovieNameMustNotMatch() {
+	public void testFullMovieNameMustMatch() {
 		List<Movie> result = searchService.search("The Glorious Lady");
 
-		Assert.assertThat(result.size(), Matchers.equalTo(0));
+		Assert.assertThat(result.size(), Matchers.equalTo(1));
 	}
 
 	@Test
