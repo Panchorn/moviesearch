@@ -41,7 +41,7 @@ public class InvertedIndexMovieSearchService implements MovieSearchService {
 		// By the way, in this assignment, you must use intersection so that it left for just movie id 5.
 
         String queryTextLower = queryText.toLowerCase();
-        List<String> queryList = Arrays.asList(queryTextLower.split(" ")); //TODO REFACTOR THIS TO REMOVE SPECIAL CHARACTER
+        List<String> queryList = Arrays.asList(queryTextLower.split(" "));
 
         List<Long> movieIdList = queryList
                 .stream()

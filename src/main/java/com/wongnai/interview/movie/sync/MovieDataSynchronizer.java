@@ -39,7 +39,7 @@ public class MovieDataSynchronizer {
         movieList
                 .stream()
                 .forEach(m -> {
-                    List<String> key = Arrays.asList(m.getName().split(" "));
+                    List<String> key = Arrays.asList(m.getName().replaceAll("\\p{Punct}", "").split(" "));
                     key.stream().forEach(s -> putIndexToMap(s.toLowerCase(), m.getId()));
                 });
     }
