@@ -1,4 +1,4 @@
-package com.wongnai.interview;
+package com.wongnai.interview.movie;
 
 import org.springframework.stereotype.Component;
 
