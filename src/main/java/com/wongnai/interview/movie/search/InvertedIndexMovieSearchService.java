@@ -48,8 +48,9 @@ public class InvertedIndexMovieSearchService implements MovieSearchService {
                 .map(s -> MovieConstant.MAP_INDEX.get(s))
                 .filter(idList -> idList != null)
                 .reduce((idList, idList2) -> {
-                    idList.retainAll(idList2);
-                    return idList;
+                    List<Long> list = new LinkedList<>(idList);
+                    list.retainAll(idList2);
+                    return list;
                 })
                 .orElseGet(() -> new LinkedList<>());
 
