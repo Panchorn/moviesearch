@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.wongnai.interview.MovieConstant;
+import com.wongnai.interview.movie.MovieConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;

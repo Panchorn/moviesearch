@@ -2,7 +2,7 @@ package com.wongnai.interview.movie.sync;
 
 import javax.transaction.Transactional;
 
-import com.wongnai.interview.MovieConstant;
+import com.wongnai.interview.movie.MovieConstant;
 import com.wongnai.interview.movie.Movie;
 import com.wongnai.interview.movie.external.MoviesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
