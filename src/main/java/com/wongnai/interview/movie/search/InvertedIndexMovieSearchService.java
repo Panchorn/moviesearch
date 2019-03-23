@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.wongnai.interview.movie.MovieConstant;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -40,21 +41,28 @@ public class InvertedIndexMovieSearchService implements MovieSearchService {
 		// you have to return can be union or intersection of those 2 sets of ids.
 		// By the way, in this assignment, you must use intersection so that it left for just movie id 5.
 
+        Iterable<Movie> movie;
+
         String queryTextLower = queryText.toLowerCase();
-        List<String> queryList = Arrays.asList(queryTextLower.split(" "));
+        List<String> queryList = Arrays.asList(queryTextLower.replaceAll("\\p{Punct}", "").split(" "));
 
-        List<Long> movieIdList = queryList
-                .stream()
-                .map(s -> MovieConstant.MAP_INDEX.get(s))
-                .filter(idList -> idList != null)
-                .reduce((idList, idList2) -> {
-                    List<Long> list = new LinkedList<>(idList);
-                    list.retainAll(idList2);
-                    return list;
-                })
-                .orElseGet(() -> new LinkedList<>());
+        if (Strings.isEmpty(queryTextLower)) {
+            movie = movieRepository.findAll();
+        }
+        else {
+            List<Long> movieIdList = queryList
+                    .stream()
+                    .map(s -> MovieConstant.MAP_INDEX.get(s))
+                    .filter(idList -> idList != null)
+                    .reduce((idList, idList2) -> {
+                        List<Long> list = new LinkedList<>(idList);
+                        list.retainAll(idList2);
+                        return list;
+                    })
+                    .orElseGet(() -> new LinkedList<>());
 
-        Iterable<Movie> movie = movieRepository.findAllById(movieIdList);
+            movie = movieRepository.findAllById(movieIdList);
+        }
 
         return Lists.newArrayList(movie);
 	}
