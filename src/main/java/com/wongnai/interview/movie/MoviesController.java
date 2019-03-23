@@ -1,6 +1,7 @@
 package com.wongnai.interview.movie;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +25,7 @@ public class MoviesController {
 	 * </pre>
 	 */
 	@Autowired
-	@Qualifier("databaseMovieSearchService")
+	@Qualifier("invertedIndexMovieSearchService")
 	private MovieSearchService movieSearchService;
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -34,6 +35,9 @@ public class MoviesController {
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public List<Movie> searchTitleWithKeyword(@RequestParam("q") String keyword) {
-		return movieSearchService.search(keyword);
+	    Long start = System.nanoTime();
+        List<Movie> movies = movieSearchService.search(keyword);
+        System.out.println("Cost : " + TimeUnit.MILLISECONDS.convert(System.nanoTime() - start, TimeUnit.NANOSECONDS) + " ms");
+		return movies;
 	}
 }
